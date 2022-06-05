@@ -1,11 +1,9 @@
+import Die from './components/Die';
 
-
-function App() {
-  return (
-    <div className="card">
-      <h1>App</h1>
-    </div>
-  );
-}
+const App = () => {
+    return (
+        <main>App</main>
+    );
+};
 
 export default App;
