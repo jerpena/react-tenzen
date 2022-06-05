@@ -1,8 +1,13 @@
+import { useState } from 'react';
 import Die from './components/Die';
 import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
 
 const App = () => {
+    const [dice, setDice] = useState([]);
+    const [tenzies, setTenzies] = useState(false);
+
+
     return (
         <main>
             <h1 className="title">Tenzies</h1>
