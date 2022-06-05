@@ -4,9 +4,53 @@ import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
 
 const App = () => {
-    const [dice, setDice] = useState([]);
+    const generateNewDie = () => ({
+        value: Math.ceil(Math.random() * 6),
+        isHeld: false,
+        id: nanoid(),
+    });
+
+    const allNewDice = () => {
+        const newDice = [];
+        for (let i = 0; i < 10; i++) {
+            newDice.push(generateNewDie());
+        }
+        return newDice;
+    };
+
+    const [dice, setDice] = useState(allNewDice());
     const [tenzies, setTenzies] = useState(false);
 
+    const rollDice = () => {
+        if (!tenzies) {
+            return setDice(prevDice => (
+                prevDice.map(die => {
+                    return die.isHeld
+                        ? die
+                        : generateNewDie();
+                })
+            ));
+        }
+        setTenzies(false);
+        setDice(allNewDice());
+    };
+
+    const holdDice = (id) => setDice(
+        prevDice => prevDice.map(die => {
+            return die.id === id
+                ? { ...die, isHeld: !die.isHeld }
+                : die;
+        })
+    );
+
+    const diceElements = dice.map(die => (
+        <Die
+            key={die.id}
+            value={die.value}
+            isHeld={die.isHeld}
+            holdDice={() => holdDice(die.id)}
+        />
+    ));
 
     return (
         <main>
